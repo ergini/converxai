@@ -4,6 +4,7 @@ import { Container } from '@mui/material';
 import Image from 'next/image';
 import { Navigation } from './Navigation';
 import Link from 'next/link';
+import Hero from './Hero';
 
 const Nav = styled.nav`
     display: flex;
@@ -14,41 +15,55 @@ const Nav = styled.nav`
     height: 100%;
     padding: 15px;
     margin-top: 10px;
-    border-radius: 15px;
     font-size: 1.5rem;
     color: #333;
     text-align: center;
 
-    .blur {
+    .gradient {
         position: absolute;
-        width: 1240px;
-        height: 90px;
+        top: 0;
         right: 0;
-        left: 0;
-        top: 10px;
-        transform: translateX(14%);
-        background: rgba(255, 255, 255, 0.1);
-        filter: blur(10px);
+        align-items: center;
+        justify-content: center;
+        transform: translate(-50%, 40%);
         z-index: -1;
+        width: 50vw;
+        height: 50vh;
+        opacity: 0.2;
+        filter: blur(50px);
+        border-radius: 30%;
+        background-image: linear-gradient(to right top, #845ec2, #9d64d3, #b86ae3, #d46ef2, #f272ff);
+    }
+
+    .white-square-grid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100vh;
+        opacity: 0.4;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23fff' /%3E%3Crect x='50%' width='1' height='100%' fill='%23ddd' /%3E%3Crect y='50%' width='100%' height='1' fill='%23ddd' /%3E%3C/svg%3E%0A");
+        background-size: 20px 20px;
     }
 `;
 
 const Logo = styled.div`
-    margin-right: 20px;
-    a{
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: start;
         width: 100%;
         height: 100%;
-        padding: 0 0.8rem;
-        font-size: 1.5rem;
-        text-align: center;
+        a{
+            display: flex;
+            font-family: 'Azonix', sans-serif;
+            flex-direction: row;
+            align-items: center;
+            color: #333;
+        }
 
         img{
-            margin-right: 5px;
+            margin-right: 7px;
         }
+    span {
+        color: #5f44f6;
     }
 `;
 
@@ -56,15 +71,17 @@ export default function Home() {
     return (
         <Container style={{ maxWidth: 1240 }}>
             <Nav>
-                <div className="blur"></div>
+                <div className="gradient"></div>
+                <div className="white-square-grid"></div>
                 <Logo>
                     <Link href="/" passHref>
                         <Image src="/images/logo.svg" alt="logo" width={35} height={35} />
-                        <h1>Converx <span>AI</span></h1>
+                        <h1>Converx<span>AI</span></h1>
                     </Link>
                 </Logo>
                 <Navigation />
             </Nav>
+            <Hero />
         </Container>
     )
 }

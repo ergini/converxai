@@ -17,7 +17,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        style={{ background: '#1e1e1e' }}
         className={inter.className}
       >
         {children}
