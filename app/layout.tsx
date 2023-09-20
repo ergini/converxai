@@ -6,7 +6,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Converx AI',
-  description: 'Your business at another horizon',
+  description: 'We take your business to another horizon',
 }
 
 export default function RootLayout({
