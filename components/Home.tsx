@@ -1,10 +1,11 @@
 "use client"
 import styled from '@emotion/styled';
-import { Container } from '@mui/material';
+import { Container, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import { Navigation } from './Navigation';
 import Link from 'next/link';
 import Hero from './Hero';
+import { MobNavigation } from './MobNavigation';
 
 const Nav = styled.nav`
     display: flex;
@@ -68,6 +69,8 @@ const Logo = styled.div`
 `;
 
 export default function Home() {
+    const smallDevice = useMediaQuery('(max-width:700px)');
+
     return (
         <Container style={{ maxWidth: 1240 }}>
             <Nav>
@@ -79,7 +82,7 @@ export default function Home() {
                         <h1>Converx<span>AI</span></h1>
                     </Link>
                 </Logo>
-                <Navigation />
+                {!smallDevice ? <Navigation /> : <MobNavigation />}
             </Nav>
             <Hero />
         </Container>
