@@ -1,79 +1,127 @@
-/* eslint-disable react/no-unescaped-entities */
 import { Button } from "@/components/ui/button"
 import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
+    Form,
+    FormControl,
+    FormDescription,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import {
-    Tabs,
-    TabsContent,
-    TabsList,
-    TabsTrigger,
-} from "@/components/ui/tabs"
+import { useForm } from "react-hook-form"
+import axios from "axios"
+import { useState } from "react"
+import { format } from "date-fns"
+import { Calendar as CalendarIcon } from "lucide-react"
 
-export function Form() {
+import { cn } from "@/lib/utils"
+import { Calendar } from "@/components/ui/calendar"
+import {
+    Popover,
+    PopoverContent,
+    PopoverTrigger,
+} from "@/components/ui/popover"
+
+export function ContactForm() {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [date, setDate] = useState<Date>();
+    const form = useForm();
+
+    const formData = {
+        username: name,
+        email: email,
+        date: date
+    }
+
+    const onSubmit = async () => {
+        try {
+            await axios.post('/api/formSubmit', formData);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // const getData = async () => {
+    //     try {
+    //         const response = await axios({
+    //             url: '/api/formSubmit',
+    //             method: 'GET',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             }
+    //         })
+    //         console.log(response.data);
+    //     } catch (error) {
+    //         console.log(error);
+    //     }
+    // };
+
     return (
-        <Tabs defaultValue="account" className="max-[400px]: mt-20">
-            <TabsList className="grid w-full grid-cols-2" style={{ background: '#121212' }}>
-                <TabsTrigger value="account">Want to know more</TabsTrigger>
-                <TabsTrigger value="password">Interested for AI A.</TabsTrigger>
-            </TabsList>
-            <TabsContent value="account">
-                <form
-                    action="https://formspree.io/f/xvojwqvz"
-                    method="POST"
-                >
-                    <Card style={{ backgroundColor: '#121212', color: 'whitesmoke', border: 'none' }}>
-                        <CardHeader>
-                            <CardTitle>I want to know more</CardTitle>
-                            <CardDescription style={{ marginTop: 15, marginBottom: -20, color: 'rgba(255,255,255,0.6', fontSize: 14 }}>
-                                If you're interested to know more about us & what we're offering, please enter requested details below.
-                            </CardDescription>
-                        </CardHeader>
-                        <CardContent className="space-y-2">
-                            <div className="space-y-1 text-black">
-                                <Input name="name" id="name" placeholder="Enter your name" />
+        <Form {...form}>
+            <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
+                <FormField
+                    control={form.control}
+                    name="username"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Name</FormLabel>
+                            <FormControl>
+                                <Input type="text" placeholder="Your Name..." onChange={(e: any) => setName(e.target.value)} value={name} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Email</FormLabel>
+                            <FormControl>
+                                <Input onChange={(e: any) => setEmail(e.target.value)} value={email} type="text" placeholder="Your Name..." />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+                <FormField
+                    control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                        <>
+                            <div className="flex flex-col items-start">
+                                <FormLabel style={{ marginBottom: 5 }}>Meeting Date</FormLabel>
+                                <Popover>
+                                    <PopoverTrigger asChild>
+                                        <Button
+                                            variant={"outline"}
+                                            className={cn(
+                                                "w-[280px] justify-start text-left font-normal",
+                                                !date && "text-muted-foreground"
+                                            )}
+                                        >
+                                            <CalendarIcon className="mr-2 h-4 w-4" />
+                                            {date ? format(date, "PPP") : <span>Pick a date</span>}
+                                        </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-auto p-0">
+                                        <Calendar
+                                            mode="single"
+                                            selected={date}
+                                            onSelect={setDate}
+                                            initialFocus
+                                        />
+                                    </PopoverContent>
+                                </Popover>
                             </div>
-                            <div className="space-y-1 text-black">
-                                <Input name="email" id="email" placeholder="Enter your email" />
-                            </div>
-                        </CardContent>
-                        <CardFooter>
-                            <Button type="submit" variant="outline" className="text-black"
-                            >
-                                Save changes
-                            </Button>
-                        </CardFooter>
-                    </Card>
-                </form>
-            </TabsContent>
-            <TabsContent value="password">
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Interested for AI Asisstant</CardTitle>
-                        <CardDescription style={{ marginTop: 15, marginBottom: -20, color: 'rgba(0,0,0,0.7', fontSize: 14 }}>
-                            If you're interested to have our services for your business, please enter requested details below.
-                        </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-2">
-                        <div className="space-y-1">
-                            <Input placeholder="Enter your name" id="name" name="name"/>
-                        </div>
-                        <div className="space-y-1">
-                            <Input placeholder="Enter your email" id="email" name="email" type="email" />
-                        </div>
-                    </CardContent>
-                    <CardFooter>
-                        <Button>Save password</Button>
-                    </CardFooter>
-                </Card>
-            </TabsContent>
-        </Tabs>
+                        </>
+                    )}
+                />
+                <Button type="submit">Submit</Button>
+            </form>
+        </Form>
     )
 }

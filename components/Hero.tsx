@@ -8,7 +8,7 @@ import { useMediaQuery } from "@mui/material";
 import { useEffect, useState } from "react";
 import WhatsappIcon from "./../public/images/whatsapp.svg";
 import MicrosoftTeamsIcon from "./../public/images/microsoft-teams.svg";
-import { Form } from "./Form";
+import { ContactForm } from "./Form";
 
 const processes = [
     {
@@ -164,6 +164,18 @@ const Content = styled.div`
         background-size: 20px 20px;
     }
 
+    .footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        h1{
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
+    }
+
     @media (max-width: 768px) {
         align-items: start;
         text-align: left;
@@ -199,9 +211,12 @@ const ProcessWrapper = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
     margin-top: 50px;
     font-family: 'Poppins', sans-serif;
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 const Process = styled.div`
@@ -243,6 +258,7 @@ const Process = styled.div`
 
     @media (max-width: 768px) {
         margin-left: 0;
+        width: 100%;
     }
 `;
 const ServicesWrapper = styled.div`
@@ -265,7 +281,7 @@ const Service = styled.div`
     align-items: start;
     justify-content: start;
     font-family: 'Poppins', sans-serif;
-    max-width: 360px;
+    width: 100%;
     height: 100%;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -364,7 +380,7 @@ const Card = styled.div`
 export default function Hero() {
     const [smallDevice, setSmallDevice] = useState(false);
 
-    const matches = useMediaQuery('(max-width:900px)');
+    const matches = useMediaQuery('(max-width:768px)');
 
     useEffect(() => {
         setSmallDevice(matches);
@@ -586,22 +602,26 @@ export default function Hero() {
                     </ServicesWrapper>
                 </Content>
             </Container>
-            <Container style={{ padding: '10px 5px', marginTop: 40, marginBottom: 40, background: '#1e1e1e', borderRadius: 20 }}>
-                <Content>
-                    <div className="footer" style={{ padding: 10, marginBottom: -15 }}>
-                        <h1 style={{ color: 'whitesmoke', marginTop: 0 }}>
-                            Interested in our services?
-                        </h1>
-                        <p style={{ color: 'whitesmoke' }}>
-                            We can have an online meeting to discuss your needs and how we can help you.<br />
-                            Please choose one of the forms below and we will contact you as soon as possible.
-                        </p>
-                    </div>
-                    <div style={{ padding: 10, marginTop: -22 }}>
-                        <Form />
-                    </div>
-                </Content>
-            </Container>
+            <Content style={{
+                marginTop: 20,
+                marginBottom: 30,
+                padding: 30,
+                background: '#1e1e1e',
+                borderRadius: 10,
+                alignItems: 'center',
+                textAlign: 'center'
+            }}>
+                <h1 style={{ color: 'whitesmoke', marginTop: 0 }}>
+                    Interested in our services?
+                </h1>
+                <p style={{ color: 'whitesmoke', maxWidth: 700 }}>
+                    We can have an online meeting to discuss your needs and how we can help you.<br />
+                    Please choose one of the forms below and we will contact you as soon as possible.
+                </p>
+            </Content>
+            <div style={{ padding: 10, marginTop: -22 }}>
+                <ContactForm />
+            </div>
         </>
     )
 }
