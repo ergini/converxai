@@ -30,7 +30,7 @@ export function ContactForm() {
     const form = useForm();
 
     const formData = {
-        username: name,
+        name: name,
         email: email,
         date: date
     }
