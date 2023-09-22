@@ -1,19 +1,19 @@
-// prisma/schema.prisma
-
-generator client {
-    provider = "prisma-client-js"
-    output   = "./generated/client"
-}
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-    provider  = "postgresql"
-    url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
-    directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
 }
 
 model FormData {
-    id    Int      @id @default(autoincrement())
-    name  String
-    email String
-    date  DateTime
+  id    Int      @id @default(autoincrement())
+  name  String
+  email String
+  Date  DateTime
 }

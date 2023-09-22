@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prismadb from '@/lib/prismadb';
-
-const prisma = globalThis.prisma || new prismadb();
+import prisma from '@/lib/prismadb';
 
 interface FormData {
     name: string;
@@ -16,11 +14,11 @@ export async function POST(req: NextRequest, res: NextResponse) {
             const { name, email, date } = formData;
 
             // Use Prisma to insert data into the database
-            const newData = await prisma.form_data.create({
+            const newData = await prisma.formData.create({
                 data: {
                     name,
                     email,
-                    date,
+                    Date: date,
                 },
             });
 
@@ -37,7 +35,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 export async function GET() {
     try {
         // Use Prisma to retrieve data from the database
-        const formData = await prisma.form_data.findMany();
+        const formData = await prisma.formData.findMany();
 
         return NextResponse.json({ data: formData });
     } catch (error) {
