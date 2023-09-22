@@ -22,13 +22,16 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover"
+import { Toaster, toast } from 'sonner'
 
 export function ContactForm() {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [date, setDate] = useState<Date>();
+    const [error, setError] = useState('');
     // const [showData, setShowData] = useState(false);
     // const [dataForm, setDataForm] = useState<any>({});
+    const { register, handleSubmit, formState: { errors } } = useForm();
     const form = useForm();
 
     const formData = {
@@ -38,20 +41,25 @@ export function ContactForm() {
     }
 
     const onSubmit = async (data: any) => {
-        try {
-            const response = await axios({
-                url: '/api/formSubmit',
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: formData
-            })
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
+        if (name !== '' && email !== '' && date !== undefined) {
+            try {
+                const response = await axios({
+                    url: '/api/formSubmit',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    data: formData
+                })
+                console.log(response.data);
+                toast.success('Form Submitted Successfully, we will be in touch with you soon');
+            } catch (error) {
+                console.log(error);
+            }
+        } else {
+            toast.error('Please fill all the fields');
         }
-    };
+    }
 
     // const getData = async () => {
     //     try {
@@ -78,6 +86,7 @@ export function ContactForm() {
 
     return (
         <>
+            <Toaster richColors/>
             <Form {...form}>
                 <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
@@ -100,7 +109,7 @@ export function ContactForm() {
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input onChange={(e: any) => setEmail(e.target.value)} value={email} type="text" placeholder="Your Name..." />
+                                    <Input onChange={(e: any) => setEmail(e.target.value)} value={email} type="text" placeholder="Your Email..." />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
