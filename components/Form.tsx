@@ -23,14 +23,15 @@ import {
     PopoverTrigger,
 } from "@/components/ui/popover"
 import { Toaster, toast } from 'sonner'
+import { useMediaQuery } from "@mui/material"
 
 export function ContactForm() {
+
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [date, setDate] = useState<Date>();
     const [error, setError] = useState('');
-    // const [showData, setShowData] = useState(false);
-    // const [dataForm, setDataForm] = useState<any>({});
+    const isMobile = useMediaQuery('(max-width: 768px)');
     const { register, handleSubmit, formState: { errors } } = useForm();
     const form = useForm();
 
@@ -61,32 +62,9 @@ export function ContactForm() {
         }
     }
 
-    // const getData = async () => {
-    //     try {
-    //         const response = await axios({
-    //             url: '/api/formSubmit',
-    //             method: 'GET',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             }
-    //         })
-    //         setShowData(true);
-    //         setDataForm(response.data.data.map((item: any) => {
-    //             return {
-    //                 name: item.name,
-    //                 email: item.email,
-    //                 Date: item.Date
-    //             }
-    //         }));
-    //         console.log(dataForm);
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
-    // };
-
     return (
         <>
-            <Toaster richColors/>
+            {isMobile ? <Toaster richColors position="top-center"/> : <Toaster richColors/>}
             <Form {...form}>
                 <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
