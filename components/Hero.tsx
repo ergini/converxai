@@ -213,6 +213,7 @@ const ProcessWrapper = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 50px;
+    width: 100%;
     font-family: 'Poppins', sans-serif;
 
     @media (max-width: 768px) {
@@ -226,7 +227,7 @@ const Process = styled.div`
     align-items: start;
     justify-content: start;
     font-family: 'Poppins', sans-serif;
-    max-width: 360px;
+    width: 360px;
     height: 100%;
     border-radius: 10px;
     background-color: rgba(255,255,255,0.5);
@@ -257,9 +258,13 @@ const Process = styled.div`
         transform: translate(0, -10px);
     }
 
-    @media (max-width: 768px) {
-        margin-left: 0;
+    @media (max-width: 900px) {
         width: 100%;
+        margin-left: 0;
+
+        p{
+            white-space: nowrap;
+        }
     }
 `;
 const ServicesWrapper = styled.div`
@@ -333,6 +338,17 @@ const Team = styled.div`
         object-fit: cover;
     }
 
+    @media (max-width: 900px) {
+        flex-direction: column;
+        margin-left: 0;
+        margin-right: 0;
+
+        img{
+            margin-top: 20px;
+            max-width: 100%;
+        }
+    }
+
     @media (max-width: 768px) {
         flex-direction: column;
         margin-left: 0;
@@ -381,7 +397,7 @@ const Card = styled.div`
 export default function Hero() {
     const [smallDevice, setSmallDevice] = useState(false);
 
-    const matches = useMediaQuery('(max-width:768px)');
+    const matches = useMediaQuery('(max-width:900px)');
 
     useEffect(() => {
         setSmallDevice(matches);
@@ -496,7 +512,7 @@ export default function Hero() {
                         </ProcessWrapper>
                     )}
                 </Content>
-                <Content className="items-start lg:ml-5">
+                <Content className="items-start lg:ml-5 text-left">
                     <div
                         className="gradient"
                         style={{
@@ -606,18 +622,17 @@ export default function Hero() {
             <Content style={{
                 marginTop: 20,
                 marginBottom: 30,
-                padding: 30,
+                padding: 40,
                 background: '#1e1e1e',
                 borderRadius: 10,
                 alignItems: 'center',
                 textAlign: 'center'
             }}>
-                <h1 style={{ color: 'whitesmoke', marginTop: 0 }}>
+                <h1 style={{ color: 'whitesmoke', marginTop: 0, fontSize: 31 }}>
                     Interested in our services?
                 </h1>
-                <p style={{ color: 'whitesmoke', maxWidth: 700 }}>
-                    We can have an online meeting to discuss your needs and how we can help you.<br />
-                    Please choose one of the forms below and we will contact you as soon as possible.
+                <p style={{ color: 'whitesmoke', maxWidth: 800, fontSize: 15 }}>
+                    We invite you to schedule an online meeting where we can explore your requirements and offer our assistance. Please complete the form below, and we will promptly reach out to you.
                 </p>
             </Content>
             <div style={{ padding: 10, marginTop: -22 }}>

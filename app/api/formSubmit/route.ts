@@ -5,13 +5,14 @@ interface FormData {
     name: string;
     email: string;
     date: string;
+    budget: string;
 }
 
 export async function POST(req: NextRequest, res: NextResponse) {
     if (req.method === 'POST') {
         try {
             const formData: FormData = await req.json();
-            const { name, email, date } = formData;
+            const { name, email, date, budget } = formData;
 
             // Use Prisma to insert data into the database
             const newData = await prisma.formData.create({
@@ -19,6 +20,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
                     name,
                     email,
                     Date: date,
+                    budget,
                 },
             });
 

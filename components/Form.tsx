@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -24,25 +23,34 @@ import {
 } from "@/components/ui/popover"
 import { Toaster, toast } from 'sonner'
 import { useMediaQuery } from "@mui/material"
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
 
 export function ContactForm() {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [date, setDate] = useState<Date>();
-    const [error, setError] = useState('');
+    const [budget, setBudget] = useState('');
     const isMobile = useMediaQuery('(max-width: 768px)');
-    const { register, handleSubmit, formState: { errors } } = useForm();
     const form = useForm();
 
     const formData = {
         name: name,
         email: email,
-        date: date
+        date: date,
+        budget: budget
     }
 
+    const currentDate = new Date();
+
     const onSubmit = async (data: any) => {
-        if (name !== '' && email !== '' && date !== undefined) {
+        if (name !== '' && email !== '' && budget !== '' && date !== undefined && date > currentDate) {
             try {
                 const response = await axios({
                     url: '/api/formSubmit',
@@ -52,11 +60,12 @@ export function ContactForm() {
                     },
                     data: formData
                 })
-                console.log(response.data);
                 toast.success('Form Submitted Successfully, we will be in touch with you soon');
             } catch (error) {
-                console.log(error);
+                toast.error('Something went wrong, please try again later');
             }
+        } else if (date !== undefined && date < currentDate) {
+            toast.error('Please select a date in the future');
         } else {
             toast.error('Please fill all the fields');
         }
@@ -64,7 +73,7 @@ export function ContactForm() {
 
     return (
         <>
-            {isMobile ? <Toaster richColors position="top-center"/> : <Toaster richColors/>}
+            {isMobile ? <Toaster richColors position="top-center" /> : <Toaster richColors />}
             <Form {...form}>
                 <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
                     <FormField
@@ -126,21 +135,30 @@ export function ContactForm() {
                             </>
                         )}
                     />
+                    <FormField
+                        control={form.control}
+                        name="budget"
+                        render={({ field }) => (
+                            <>
+                                <div className="flex flex-col items-start">
+                                    <FormLabel style={{ marginBottom: 5 }}>Your potential budget</FormLabel>
+                                    <Select onValueChange={(value) => setBudget(value)}>
+                                        <SelectTrigger className="w-[180px]">
+                                            <SelectValue placeholder="Select your budget" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="< 1000$">{`< 1000$`}</SelectItem>
+                                            <SelectItem value="1000$ - 5000$">{`1000$ - 5000$`}</SelectItem>
+                                            <SelectItem value="5000$+">{`5000$+`}</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                            </>
+                        )}
+                    />
                     <Button type="submit">Submit</Button>
                 </form>
             </Form>
-            {/* <Button onClick={getData}>Get Data</Button>
-            <div>
-                {showData && dataForm.map((item: any) => {
-                    return (
-                        <div className="flex flex-col items-start" key={item.id}>
-                            <p>Name: {item.name}</p>
-                            <p>Email: {item.email}</p>
-                            <p>Date: {item.Date}</p>
-                        </div>
-                    )
-                })}
-            </div> */}
         </>
     )
 }

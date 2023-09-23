@@ -10,8 +10,10 @@ const Table = styled.table`
     justify-content: center;
     border-collapse: collapse;
     margin-top: 2rem;
+    margin-left: 20px;
+    border-radius: 20px;
     th {
-        background-color: #8a8a8a;
+        background-color: #1e1e1e;
         color: white;
         padding: 1rem;
         text-align: left;
@@ -50,7 +52,6 @@ export default function Users() {
                         }
                     });
                     setUsers(response.data.data);
-                    console.log(response.data.data);
                 } catch (error) {
                     console.log(error);
                 }

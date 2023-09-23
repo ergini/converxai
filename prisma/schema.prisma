@@ -16,4 +16,5 @@ model FormData {
   name  String
   email String
   Date  DateTime
+  budget String
 }
