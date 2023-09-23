@@ -25,7 +25,7 @@ export function MobNavigation() {
                 display: "flex",
                 flexDirection: "column",
             }}>
-                <Link href="/">
+                <Link href="/about">
                     <Button variant="outline">Use cases</Button>
                 </Link>
                 <Link href="/">

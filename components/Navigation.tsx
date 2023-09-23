@@ -6,11 +6,9 @@ import Link from "next/link"
 import { cn } from "@/lib/utils"
 import {
     NavigationMenu,
-    NavigationMenuContent,
     NavigationMenuItem,
     NavigationMenuLink,
     NavigationMenuList,
-    NavigationMenuTrigger,
     navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
@@ -19,14 +17,14 @@ export function Navigation() {
         <NavigationMenu>
             <NavigationMenuList>
                 <NavigationMenuItem>
-                    <Link href="/docs" passHref>
+                    <Link href="/about" passHref>
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-slate-800 text-white`}>
                             Use Cases
                         </NavigationMenuLink>
                     </Link>
                 </NavigationMenuItem>
                 <NavigationMenuItem>
-                    <Link href="/docs" legacyBehavior passHref>
+                    <Link href="/" legacyBehavior passHref>
                         <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-slate-100`}>
                             Pricing
                         </NavigationMenuLink>

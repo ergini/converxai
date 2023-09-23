@@ -5,10 +5,11 @@ import { Button } from "./ui/button";
 import styled from "@emotion/styled";
 import { BotIcon, BrainCircuitIcon, FilePieChartIcon, FlameIcon, HelpCircleIcon, LayoutPanelLeftIcon, PartyPopperIcon, ScatterChartIcon, TrendingUpIcon, UsersIcon } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import WhatsappIcon from "./../public/images/whatsapp.svg";
 import MicrosoftTeamsIcon from "./../public/images/microsoft-teams.svg";
 import { ContactForm } from "./Form";
+import '../app/chat.css'
 
 const processes = [
     {
@@ -66,6 +67,7 @@ const Title = styled.div`
     }
 
     span {
+        font-weight: 600;
         color: #845ec2;
     }
 
@@ -186,7 +188,6 @@ const Content = styled.div`
         p{
             margin-left: 0;
             font-size: 14px;
-            max-width: 150px;
         }
     }
 `;
@@ -252,6 +253,7 @@ const Process = styled.div`
         opacity: 0.7;
         margin-top: 10px;
         text-align: left;
+        width: 100%;
     }
 
     &:hover {
@@ -262,9 +264,7 @@ const Process = styled.div`
         width: 100%;
         margin-left: 0;
 
-        p{
-            white-space: nowrap;
-        }
+        
     }
 `;
 const ServicesWrapper = styled.div`
@@ -394,7 +394,14 @@ const Card = styled.div`
     }
 `;
 
+declare global {
+    interface Window {
+        voiceflow: any;
+    }
+}
+
 export default function Hero() {
+    const ref = useRef<any>(null);
     const [smallDevice, setSmallDevice] = useState(false);
 
     const matches = useMediaQuery('(max-width:900px)');
@@ -402,6 +409,40 @@ export default function Hero() {
     useEffect(() => {
         setSmallDevice(matches);
     }, [matches]);
+
+    const handleClick = () => {
+        ref?.current?.scrollIntoView({
+            behavior: 'smooth',
+        });
+    }
+
+    const showChat = () => {
+        window.voiceflow.chat.open();
+    }
+
+    useEffect(() => {
+        // Define the script element
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+
+        script.onload = function () {
+            window.voiceflow.chat.load({
+                verify: { projectID: '650ed3ebd39f2b0008e59764' },
+                url: 'https://general-runtime.voiceflow.com',
+                versionID: 'production',
+            });
+        };
+
+        script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
+
+        // Append the script to the document
+        document.head.appendChild(script);
+
+        // Clean up the script when the component unmounts
+        return () => {
+            document.head.removeChild(script);
+        };
+    }, []);
 
     return (
         <>
@@ -411,7 +452,7 @@ export default function Hero() {
                         The most powerful way <br />to take your business to <span>another level</span>
                     </h1>
                     <p>
-                        A variety of businesses and companies collaborate with <br />us so we make it easier for them to be near their customers.
+                        Our innovative solution significantly <span>boosts the quality of customer service,</span> resulting in more satisfying and engaging user experiences.
                     </p>
                 </Title>
                 <ButtonWrapper>
@@ -420,11 +461,13 @@ export default function Hero() {
                         style={{
                             marginRight: "20px"
                         }}
+                        onClick={showChat}
                     >
                         Test it now &nbsp;<span className="text-white/30">-&nbsp;for free</span>
                     </Button>
                     <Button
                         variant={"outline"}
+                        onClick={handleClick}
                     >
                         Contact Sales
                     </Button>
@@ -635,7 +678,7 @@ export default function Hero() {
                     We invite you to schedule an online meeting where we can explore your requirements and offer our assistance. Please complete the form below, and we will promptly reach out to you.
                 </p>
             </Content>
-            <div style={{ padding: 10, marginTop: -22 }}>
+            <div id="sales" ref={ref} style={{ padding: 10, marginTop: -22 }}>
                 <ContactForm />
             </div>
         </>

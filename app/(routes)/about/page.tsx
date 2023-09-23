@@ -1,11 +1,10 @@
+import About from '@/components/about/About';
 import React from 'react';
 
-const ContactPage = () => {
+const AboutPage = () => {
     return (
-        <div>
-            heyys
-        </div>
+        <About />
     );
 };
 
-export default ContactPage;
+export default AboutPage;
