@@ -6,16 +6,15 @@
     border-radius: 20px;
     width: 500px;
     height: 700px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateX(90%);
+    box-shadow: 0 0 10px 0 rgba(132, 94, 194, 0.2);
 }
 
 @media only screen and (max-width: 768px) {
     #voiceflow-chat .vfrc-widget--chat {
         width: 450px;
         height: 750px;
+        transform: translateX(20%);
     }
 }
 
@@ -24,5 +23,6 @@
         width: 100%;
         height: 100%;
         border-radius: 0;
+        transform: translateX(0);
     }
 }
