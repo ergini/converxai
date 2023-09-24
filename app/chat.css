@@ -1,3 +1,7 @@
+body {
+    overflow-x: hidden;
+}
+
 #voiceflow-chat .vfrc-widget .vfrc-launcher {
     display: none;
 }
@@ -24,5 +28,44 @@
         height: 100%;
         border-radius: 0;
         transform: translateX(0);
+    }
+}
+
+.gradient-background {
+    position: absolute;
+    top: 0;
+    z-index: -100;
+    width: 100vw;
+    height: 100vh;
+    transform: rotate(15deg);
+    scale: 1.5;
+    background: linear-gradient(135deg,
+            #330033,
+            #660066,
+            #990099,
+            #cc00cc,
+            #ff00ff,
+            #fff,
+            #fff,
+            #fff,
+            #660066,
+            #330033,
+            #330033,
+            #6be3ff);
+    background-size: 200% 200%;
+    animation: gradientAnimation 10s linear infinite;
+}
+
+@keyframes gradientAnimation {
+    0% {
+        background-position: 50% 100%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 50% 100%;
     }
 }

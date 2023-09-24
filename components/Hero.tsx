@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import WhatsappIcon from "./../public/images/whatsapp.svg";
 import MicrosoftTeamsIcon from "./../public/images/microsoft-teams.svg";
 import { ContactForm } from "./Form";
+import TextTransition, { presets } from 'react-text-transition';
 import '../app/chat.css'
 
 const processes = [
@@ -205,6 +206,18 @@ const VideoWrapper = styled.div`
         border: 1px solid rgba(0,0,0,0.1);
         border-radius: 10px;
     }
+
+    .white-square-grid {
+        position: absolute;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100vh;
+        transform: translate(0, 25.25%);
+        opacity: 0.4;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40'%3E%3Crect width='40' height='40' fill='%23fff' /%3E%3Crect x='50%' width='1' height='100%' fill='%23ddd' /%3E%3Crect y='50%' width='100%' height='1' fill='%23ddd' /%3E%3C/svg%3E%0A");
+        background-size: 20px 20px;
+    }
 `;
 
 const ProcessWrapper = styled.div`
@@ -361,6 +374,8 @@ const Team = styled.div`
 `;
 
 const CardWrapper = styled.div`
+    position: sticky;
+    top: 20px;
     display: flex;
     flex-direction: column;
 `;
@@ -394,6 +409,33 @@ const Card = styled.div`
     }
 `;
 
+const Languages = styled.div`
+    position: sticky;
+    top: 20px;
+    bottom: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(132, 94, 194, 0.8);
+    background-blend-mode: overlay;
+    box-shadow: rgba(60, 64, 67, 0.1) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    padding: 10px;
+    border-radius: 10px;
+    font-weight: 600;
+    color: #fefefe;
+    max-width: 350px;
+
+    @media (max-width: 768px) {
+        margin-top: -70px;
+        margin-bottom: 20px;
+    }
+
+    span {
+        color: rgba(255, 255, 255, 0.6);
+    }
+`;
+
 declare global {
     interface Window {
         voiceflow: any;
@@ -402,6 +444,9 @@ declare global {
 
 export default function Hero() {
     const ref = useRef<any>(null);
+    const languages = ["English", "German", "Turkish", "Arabic"];
+    const otherLanguages = "30 other languages..."
+    const [index, setIndex] = useState(0);
     const [smallDevice, setSmallDevice] = useState(false);
 
     const matches = useMediaQuery('(max-width:900px)');
@@ -444,10 +489,25 @@ export default function Hero() {
         };
     }, []);
 
+    useEffect(() => {
+        const intervalId = setInterval(
+            () => setIndex((index) => index + 1),
+            7000, // every 3 seconds
+        );
+        return () => clearTimeout(intervalId);
+    }, []);
+
     return (
         <>
             <Container>
                 <Title>
+                    <Languages className="backdrop-blur-md">
+                        <TextTransition direction="up" springConfig={presets.wobbly}>{languages[index % languages.length]}</TextTransition>
+                        <span className="text-white/30">&nbsp;+&nbsp;</span>
+                        <span>
+                            {otherLanguages}
+                        </span>
+                    </Languages>
                     <h1>
                         The most powerful way <br />to take your business to <span>another level</span>
                     </h1>
@@ -473,6 +533,8 @@ export default function Hero() {
                     </Button>
                 </ButtonWrapper>
                 <VideoWrapper>
+                    <div className="gradient"></div>
+                    <div className="white-square-grid"></div>
                     <div className="bg-blur"></div>
                     <video width="100%" height="100%" autoPlay loop muted>
                         <source src="/videos/converxaii.mp4" type="video/mp4" />
@@ -584,7 +646,9 @@ export default function Hero() {
                         </Card>
                         <Card
                             className="backdrop-blur-md"
-                            style={{ background: 'rgba(132, 94, 194, 0.2)' }}
+                            style={{
+                                background: 'rgba(132, 94, 194, 0.2)'
+                            }}
                         >
                             <FlameIcon size={35} color="#333" />
                             <h1>You're one of the first...</h1>

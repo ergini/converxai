@@ -72,19 +72,21 @@ export default function Home() {
     const smallDevice = useMediaQuery('(max-width:700px)');
 
     return (
-        <Container style={{ maxWidth: 1240 }}>
-            <Nav>
-                <div className="gradient"></div>
-                <div className="white-square-grid"></div>
-                <Logo>
-                    <Link href="/" passHref>
-                        <Image src="/images/logo.svg" alt="logo" width={35} height={35} />
-                        <h1>Converx<span>AI</span></h1>
-                    </Link>
-                </Logo>
-                {!smallDevice ? <Navigation /> : <MobNavigation />}
-            </Nav>
-            <Hero />
-        </Container>
+        <>
+            <Container style={{ maxWidth: 1240 }}>
+                <Nav>
+                    <div className="gradient"></div>
+                    <div className="white-square-grid"></div>
+                    <Logo>
+                        <Link href="/" passHref>
+                            <Image src="/images/logo.svg" alt="logo" width={35} height={35} />
+                            <h1>Converx<span>AI</span></h1>
+                        </Link>
+                    </Logo>
+                    {!smallDevice ? <Navigation /> : <MobNavigation />}
+                </Nav>
+                <Hero />
+            </Container>
+        </>
     )
 }

@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Converx AI',
+  title: 'Converx AI - AI Customer Service',
   description: 'We take your business to another horizon',
 }
 
@@ -16,6 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+      <link rel="icon" href="/images/logo.svg" sizes="any" />
+      </head>
       <body
         className={inter.className}
       >
