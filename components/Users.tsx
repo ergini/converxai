@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react'
 import styled from '@emotion/styled'
+import Moment from 'react-moment';
 import { Button } from './ui/button';
 
 const Table = styled.table`
@@ -79,7 +80,7 @@ export default function Users() {
                                 <tr key={item.id}>
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>
-                                    <td>{item.Date.split('T')[0]}</td>
+                                    <td><Moment format="DD.MM.YYYY">{item.Date}</Moment></td>
                                     <td>{item.budget}</td>
                                 </tr>
                             )
