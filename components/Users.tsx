@@ -70,6 +70,7 @@ export default function Users() {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Meeting Date</th>
+                            <th>Budget</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -79,6 +80,7 @@ export default function Users() {
                                     <td>{item.name}</td>
                                     <td>{item.email}</td>
                                     <td>{item.Date.split('T')[0]}</td>
+                                    <td>{item.budget}</td>
                                 </tr>
                             )
                         })}
