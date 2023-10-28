@@ -25,7 +25,7 @@ export function Navigation() {
                 </NavigationMenuItem>
                 <NavigationMenuItem>
                     <Link href="/" legacyBehavior passHref>
-                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-slate-100`}>
+                        <NavigationMenuLink className={`${navigationMenuTriggerStyle()} bg-slate-100 text-slate-800`}>
                             Pricing
                         </NavigationMenuLink>
                     </Link>

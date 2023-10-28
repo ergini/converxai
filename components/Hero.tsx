@@ -3,7 +3,7 @@
 import { Container } from "@mui/material";
 import { Button } from "./ui/button";
 import styled from "@emotion/styled";
-import { BotIcon, BrainCircuitIcon, FilePieChartIcon, FlameIcon, HelpCircleIcon, LayoutPanelLeftIcon, PartyPopperIcon, ScatterChartIcon, TrendingUpIcon, UsersIcon } from "lucide-react";
+import { ActivitySquareIcon, AlarmClockOffIcon, ArrowRightIcon, BotIcon, BrainCircuitIcon, FilePieChartIcon, FlameIcon, HelpCircleIcon, LayoutPanelLeftIcon, PartyPopperIcon, ScatterChartIcon, TrendingUpIcon, UsersIcon } from "lucide-react";
 import { useMediaQuery } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import WhatsappIcon from "./../public/images/whatsapp.svg";
@@ -11,6 +11,7 @@ import MicrosoftTeamsIcon from "./../public/images/microsoft-teams.svg";
 import { ContactForm } from "./Form";
 import TextTransition, { presets } from 'react-text-transition';
 import '../app/chat.css'
+import Link from "next/link";
 
 const processes = [
     {
@@ -90,9 +91,26 @@ const ButtonWrapper = styled.div`
     justify-content: center;
 
     @media (max-width: 768px) {
-        flex-direction: column;
+        /* flex-direction: column; */
         button {
             margin-bottom: 20px;
+        }
+    }
+
+    a svg {
+        margin-left: 5px;
+        animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            transform: translate(0, 0);
+        }
+        50% {
+            transform: translate(5px, 0);
+        }
+        100% {
+            transform: translate(0, 0);
         }
     }
 
@@ -308,8 +326,21 @@ const Service = styled.div`
     padding: 20px;
     border: 1px solid #ddd;
     margin-left: 20px;
-    cursor: default;
+    cursor: pointer;
     transition: all 0.3s ease-in-out;
+
+    .title{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        transition: all 0.3s ease-in-out;
+    }
+    
+    .title .icon {
+        margin-top: 20px;
+        margin-left: 5px;
+        animation: pulse 3s ease-in-out infinite;
+    }
 
     h1{
         font-size: 20px;
@@ -328,8 +359,16 @@ const Service = styled.div`
         text-align: left;
     }
 
-    &:hover {
-        transform: translate(0, -10px);
+    @keyframes pulse {
+        0% {
+            transform: translate(0, 0);
+        }
+        50% {
+            transform: translate(5px, 0);
+        }
+        100% {
+            transform: translate(0, 0);
+        }
     }
 
     @media (max-width: 768px) {
@@ -374,8 +413,6 @@ const Team = styled.div`
 `;
 
 const CardWrapper = styled.div`
-    position: sticky;
-    top: 20px;
     display: flex;
     flex-direction: column;
 `;
@@ -413,6 +450,7 @@ const Languages = styled.div`
     position: sticky;
     top: 20px;
     bottom: 20px;
+    margin-bottom: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -461,41 +499,41 @@ export default function Hero() {
         });
     }
 
-    const showChat = () => {
-        window.voiceflow.chat.open();
-    }
+    // const showChat = () => {
+    //     window.voiceflow.chat.open();
+    // }
 
-    useEffect(() => {
-        // Define the script element
-        const script = document.createElement('script');
-        script.type = 'text/javascript';
+    // useEffect(() => {
+    //     // Define the script element
+    //     const script = document.createElement('script');
+    //     script.type = 'text/javascript';
 
-        script.onload = function () {
-            window.voiceflow.chat.load({
-                verify: { projectID: '650ed3ebd39f2b0008e59764' },
-                url: 'https://general-runtime.voiceflow.com',
-                versionID: 'production',
-            });
-        };
+    //     script.onload = function () {
+    //         window.voiceflow.chat.load({
+    //             verify: { projectID: '650ed3ebd39f2b0008e59764' },
+    //             url: 'https://general-runtime.voiceflow.com',
+    //             versionID: 'production',
+    //         });
+    //     };
 
-        script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
+    //     script.src = 'https://cdn.voiceflow.com/widget/bundle.mjs';
 
-        // Append the script to the document
-        document.head.appendChild(script);
+    //     // Append the script to the document
+    //     document.head.appendChild(script);
 
-        // Clean up the script when the component unmounts
-        return () => {
-            document.head.removeChild(script);
-        };
-    }, []);
+    //     // Clean up the script when the component unmounts
+    //     return () => {
+    //         document.head.removeChild(script);
+    //     };
+    // }, []);
 
-    useEffect(() => {
-        const intervalId = setInterval(
-            () => setIndex((index) => index + 1),
-            7000, // every 3 seconds
-        );
-        return () => clearTimeout(intervalId);
-    }, []);
+    // useEffect(() => {
+    //     const intervalId = setInterval(
+    //         () => setIndex((index) => index + 1),
+    //         7000, // every 3 seconds
+    //     );
+    //     return () => clearTimeout(intervalId);
+    // }, []);
 
     return (
         <>
@@ -512,19 +550,33 @@ export default function Hero() {
                         The most powerful way <br />to take your business to <span>another level</span>
                     </h1>
                     <p>
-                        Our innovative solution significantly <span>boosts the quality of customer service,</span> resulting in more satisfying and engaging user experiences.
+                        Our innovative solution significantly <span>boosts the quality of work,</span> resulting in more satisfying and engaging user experiences.
                     </p>
                 </Title>
                 <ButtonWrapper>
-                    <Button
+                    <Link
+                        href="/business"
+                        passHref
+                    >
+                        <Button
+                            variant={"default"}
+                            style={{
+                                marginRight: "20px"
+                            }}
+                        >
+                            Why do u need it?
+                            <ArrowRightIcon className="icon" size={25} color="#fff" />
+                        </Button>
+                    </Link>
+                    {/* <Button
                         variant={"default"}
                         style={{
                             marginRight: "20px"
                         }}
                         onClick={showChat}
                     >
-                        Test it now &nbsp;<span className="text-white/30">-&nbsp;for free</span>
-                    </Button>
+                        Test AI Assistant &nbsp;<span className="text-white/30">-&nbsp;for free</span>
+                    </Button> */}
                     <Button
                         variant={"outline"}
                         onClick={handleClick}
@@ -621,9 +673,9 @@ export default function Hero() {
                     <div
                         className="gradient"
                         style={{
-                            transform: 'translate(-50%, 90%)'
+                            transform: 'translate(-50%, 90%)',
+                            opacity: 0.2
                         }}></div>
-                    <div className="white-square-grid"></div>
                     <div className="line"></div>
                     <p>
                         The Reason Why
@@ -635,6 +687,7 @@ export default function Hero() {
                         You may need a reason to collaborate with us, <br />but there are many reasons why <span>we are the best choice for you.</span>
                     </p>
                 </Content>
+
                 <Team>
                     <CardWrapper>
                         <Card className="backdrop-blur-md">
@@ -654,6 +707,18 @@ export default function Hero() {
                             <h1>You're one of the first...</h1>
                             <p>
                                 Your competitor don't stand a chance, how would they when u have the power of AI?!
+                            </p>
+                        </Card>
+                        <Card
+                            className="backdrop-blur-md"
+                            style={{
+                                background: 'rgba(192, 154, 255, 0.5)'
+                            }}
+                        >
+                            <AlarmClockOffIcon size={35} color="#333" />
+                            <h1>We will make it easy for you!</h1>
+                            <p>
+                                Why let something take you so much time, when we can automate it for you?! It's your opportunity!
                             </p>
                         </Card>
                     </CardWrapper>
@@ -677,6 +742,18 @@ export default function Hero() {
                         You may need a reason to collaborate with us, <br />but there are many reasons why <span>we are the best choice for you.</span>
                     </p>
                     <ServicesWrapper>
+                        <Service className="backdrop-blur-md bg-slate-600/80 text-white">
+                            <ActivitySquareIcon size={35} color="#fff" />
+                            <Link href="/business" passHref>
+                                <div className="title">
+                                    <h1 style={{ color: 'white' }}>Business Automation</h1>
+                                    <ArrowRightIcon className="icon" size={25} color="#fff" />
+                                </div>
+                            </Link>
+                            <p style={{ color: 'white' }}>
+                                We can automate your business processes that are consuming your time more than needed. So you can take care of other things.
+                            </p>
+                        </Service>
                         <Service className="backdrop-blur-md">
                             <LayoutPanelLeftIcon size={35} color="#333" />
                             <h1>Web AI Assistant</h1>
