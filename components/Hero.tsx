@@ -152,7 +152,7 @@ const Content = styled.div`
         color: #333;
         opacity: 0.8;
         max-width: 800px;
-        
+
         span {
             font-weight: 600;
             color: #845ec2;
@@ -295,7 +295,7 @@ const Process = styled.div`
         width: 100%;
         margin-left: 0;
 
-        
+
     }
 `;
 const ServicesWrapper = styled.div`
@@ -335,7 +335,7 @@ const Service = styled.div`
         align-items: center;
         transition: all 0.3s ease-in-out;
     }
-    
+
     .title .icon {
         margin-top: 20px;
         margin-left: 5px;
@@ -584,6 +584,7 @@ export default function Hero() {
                         Contact Sales
                     </Button>
                 </ButtonWrapper>
+                {/*
                 <VideoWrapper>
                     <div className="gradient"></div>
                     <div className="white-square-grid"></div>
@@ -592,6 +593,7 @@ export default function Hero() {
                         <source src="/videos/converxaii.mp4" type="video/mp4" />
                     </video>
                 </VideoWrapper>
+                */}
                 <Content>
                     <div className="gradient"></div>
                     <div className="white-square-grid"></div>
